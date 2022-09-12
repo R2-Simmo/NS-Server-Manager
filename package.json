@@ -1,0 +1,19 @@
+{
+  "name": "r2northstar-server-daemon",
+  "version": "1.0.0",
+  "description": "A Simple Daemon for TitanFall 2 Northstar Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RycXEpd/R2Northstar_Server_Daemon.git"
+  },
+  "author": "RycXEpd",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RycXEpd/R2Northstar_Server_Daemon/issues"
+  },
+  "homepage": "https://github.com/RycXEpd/R2Northstar_Server_Daemon#readme"
+}
