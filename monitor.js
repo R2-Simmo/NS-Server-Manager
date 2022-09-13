@@ -11,33 +11,15 @@ const https = require("node:https")
 const http = require("node:http")
 const child_process = require("node:child_process")
 const { REQUEST_RETRY, NORTHSTAR_RESPAWN,FAILED_AFTER_RETRY,NORTHSTAR_CONSOLE_CLOSED } = require(".")
-const {fromUnicode,toUnicode}=require("./src/unicode")
+require("./src/unicode")
+const Config=require("./src/config")
 
 let request = (new URL(worker.workerData.host).protocol.includes("https")) ? https : http
 //获取服务器设置名称
-let g_path = worker.workerData.path
-let config_path = path.join(g_path, "\\R2Northstar\\mods\\Northstar.CustomServers\\mod\\cfg\\autoexec_ns_server.cfg")
-let raw_config = fs.readFileSync(config_path).toString().split('\n')
+let g_path = worker.workerData.path;
+let config_path = path.join(g_path, "\\R2Northstar\\mods\\Northstar.CustomServers\\mod\\cfg\\autoexec_ns_server.cfg");
 //段:解析CFG
-let config = {}
-for (let line of raw_config) {
-    if (line.trim() === '') continue
-    if (line.trim().startsWith("//")) continue
-    let row = /^(\w*)\s+"(.*?)"/g.exec(line)//support for string value
-    if (row != null) {
-        config[row[1]] = String.fromUnicode(row[2]);//unescape(row[2].replace(/\\u/g, "%u"))
-        continue
-    }
-    row = /^(\w*)\s+(\d+\.\d+)/g.exec(line)//support for float value
-    if(row != null){
-        config[row[1]]=parseFloat(row[2])
-        continue
-    }
-    row = line.split("//")[0].trim()
-    let value = row.slice(row.indexOf(' ')).trim()
-    value = parseInt(value)
-    config[row.slice(0, row.indexOf(' '))] = value
-}
+let config=Config.parse(fs.readFileSync(config_path));
 //启动Northstar
 let northstar = SpawnNorthstar();
 northstar.on('exit',ExitHandler)
