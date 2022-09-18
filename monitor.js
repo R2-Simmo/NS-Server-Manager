@@ -12,7 +12,7 @@ const http = require("node:http")
 const child_process = require("node:child_process")
 const { REQUEST_RETRY, NORTHSTAR_RESPAWN,FAILED_AFTER_RETRY,NORTHSTAR_CONSOLE_CLOSED } = require(".")
 require("./src/unicode")
-const Config=require("./src/config")
+const Config=require("./src/lib/config")
 
 let request = (new URL(worker.workerData.host).protocol.includes("https")) ? https : http
 //获取服务器设置名称
