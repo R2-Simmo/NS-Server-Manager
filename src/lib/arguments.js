@@ -5,6 +5,12 @@
  * @version 1.0.0 20220918
  */
 "use strict"
+
+/**
+ * Parse arguments from string
+ * @param {string} str Arguments String
+ * @returns {Object} Arguments
+ */
 function ParseArguments(str){
     let raw;
     let args={};
@@ -33,6 +39,12 @@ function ParseArguments(str){
     }
     return args;
 }
+
+/**
+ * Create arguments string
+ * @param {Object} args Arguments
+ * @returns {string} Arguments String
+ */
 function StringifyArguments(args){
     let ret='';
     Object.keys(args).forEach(key=>{

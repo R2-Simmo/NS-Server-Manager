@@ -9,7 +9,7 @@ require("./unicode");
 
 /**
  * Parse config from string
- * @param str Config String
+ * @param {string} str Config String
  * @returns {Object} Config Object
  */
 function ParseConfig(str){
@@ -39,7 +39,7 @@ function ParseConfig(str){
 
 /**
  * Create source engine format config string
- * @param config Object
+ * @param {Object} config Object
  * @returns {string} Config String
  */
 function StringifyConfig(config){
