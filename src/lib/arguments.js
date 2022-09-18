@@ -4,6 +4,7 @@
  * @author RycXEpd
  * @version 1.0.0 20220918
  */
+"use strict"
 function ParseArguments(str){
     let raw;
     let args={};
