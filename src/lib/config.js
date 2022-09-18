@@ -8,9 +8,9 @@
 require("./unicode");
 
 /**
- * Parse Config From File
- * @param str config string
- * @returns {Object} config object
+ * Parse config from string
+ * @param str Config String
+ * @returns {Object} Config Object
  */
 function ParseConfig(str){
     let raw_config = str.toString().split('\n');
@@ -38,9 +38,9 @@ function ParseConfig(str){
 }
 
 /**
- * Create Source Engine Format Config String
- * @param config object
- * @returns {string} config string
+ * Create source engine format config string
+ * @param config Object
+ * @returns {string} Config String
  */
 function StringifyConfig(config){
     let ret='';
