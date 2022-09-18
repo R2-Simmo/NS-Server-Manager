@@ -7,8 +7,8 @@
 "use strict"
 
 /**
- * Unicode String Encode
- * @param str Original String
+ * Unicode string encode
+ * @param {string} str Original String
  * @returns {string} Unicode Encoded String
  */
 function toUnicode(str) {
@@ -24,8 +24,8 @@ function toUnicode(str) {
 }
 
 /**
- * Unicode String Decode
- * @param encoded Unicode Encoded String
+ * Unicode string decode
+ * @param {string} encoded Unicode Encoded String
  * @returns {String} Decoded String
  */
 function fromUnicode(encoded) {
