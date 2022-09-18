@@ -11,7 +11,7 @@ const https = require("node:https")
 const http = require("node:http")
 const child_process = require("node:child_process")
 const { REQUEST_RETRY, NORTHSTAR_RESPAWN,FAILED_AFTER_RETRY,NORTHSTAR_CONSOLE_CLOSED } = require(".")
-require("./src/unicode")
+require("./src/lib/unicode")
 const Config=require("./src/lib/config")
 
 let request = (new URL(worker.workerData.host).protocol.includes("https")) ? https : http
