@@ -118,6 +118,14 @@ class Server {
         return parseInt(this.#argument['-port']);
     }
 
+    /**
+     * Get running process ID
+     * @returns {number} Process ID
+     */
+    GetPID(){
+        return this.#pid;
+    }
+
     // Process Methods
 
     /**
