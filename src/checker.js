@@ -5,37 +5,14 @@
  * @version 1.0.0 20220921
  */
 
-/**
- *                             _ooOoo_
- *                            o8888888o
- *                            88" . "88
- *                            (| -_- |)
- *                            O\  =  /O
- *                         ____/`---'\____
- *                       .'  \\|     |//  `.
- *                      /  \\|||  :  |||//  \
- *                     /  _||||| -:- |||||-  \
- *                     |   | \\\  -  /// |   |
- *                     | \_|  ''\---/''  |   |
- *                     \  .-\__  `-`  ___/-. /
- *                   ___`. .'  /--.--\  `. . __
- *                ."" '<  `.___\_<|>_/___.'  >'"".
- *               | | :  `- \`.;`\ _ /`;.`/ - ` : | |
- *               \  \ `-.   \_ __\ /__ _/   .-` /  /
- *          ======`-.____`-.___\_____/___.-`____.-'======
- *                             `=---='
- *          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- *                     佛祖保佑        永无BUG
- */
-
 // master server online checker
 
 // library
 const https = require('https');
+const http = require('http');
 const Events = require('events')
 
 // constants
-const APIBase = "https://nscn.wolf109909.top"// API base
 const apis = {
     server: {
         add: '/server/add_server',
@@ -72,11 +49,16 @@ class Checker extends Events.EventEmitter {
     #servers = {};
     #pass = false;
     #emitter = null;
+    #APIBase = 'https://nscn.wolf109909.top';
 
-    constructor(delay = 5 * 60 * 1000) {
+    constructor(host, delay = 5 * 60) {
         super();
+        if(typeof host==='string')
+            this.#APIBase = host;
+        if(typeof host==='number')
+            delay=host;
         this.on('check', this.Check);// register event handler
-        this.#emitter = setInterval(this.#InternalCheck, delay)
+        this.#emitter = setInterval(this.#InternalCheck, delay * 1000)
     }
 
     Check() {
@@ -89,9 +71,10 @@ class Checker extends Events.EventEmitter {
             this.#pass = false;
             return;
         }
-        let url = new URL(APIBase);
+        let url = new URL(this.#APIBase);
         url.pathname = apis.client.servers;
-        https.get(url, res => {
+        let requester = url.protocol.includes('https') ? https : http;
+        requester.get(url, res => {
             let data = '';
             res.on('data', chunk => data += chunk);
             res.on('end', () => this.#Update(data));
