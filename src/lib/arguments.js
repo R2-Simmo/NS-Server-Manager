@@ -4,6 +4,9 @@
  * @author RycXEpd
  * @version 1.0.0 20220918
  */
+
+const Playlist=require('./playlist');
+
 "use strict"
 
 /**
@@ -12,30 +15,18 @@
  * @returns {Object} Arguments
  */
 function ParseArguments(str){
-    let raw;
+    let raw=str.trim().replaceAll("\n"," ");
     let args={};
-    let key="";
-    let arr=false;
-    raw=str.trim().replaceAll("\n"," ").split(" ");
-    for(let item of raw){
-        if(item.startsWith("-")||item.startsWith("+")) {
-            key = item;
-            args[key]=true;
-            continue;
-        }
-        if(!arr)
-            args[key]=item;
-        else
-            args[key].push(item);
-        if(item.startsWith('"')){
-            args[key]=[];
-            args[key].push(item);
-            arr=true;
-        }
-        if(item.endsWith('"')){
-            args[key]=args[key].join(" ").slice(1,-1);
-            arr=false;
-        }
+    let row;
+    let regex={
+        str:/[-|+](\w*)\s+"(.*?)"/g,
+        normal:/[-|+](\w*)\s+(\w+)/g
+    }
+    while((row = regex.str.exec(raw))!==null) {
+        args[row[1]]=Playlist.parse(row[2]);
+    }
+    while((row = regex.normal.exec(raw))!==null) {
+        args[row[1]]=row[2];
     }
     return args;
 }
