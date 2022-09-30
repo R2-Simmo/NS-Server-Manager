@@ -1,6 +1,6 @@
 {
   "name": "r2northstar-server-daemon",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Simple Daemon for TitanFall 2 Northstar Server",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,6 @@
   "bugs": {
     "url": "https://github.com/RycXEpd/R2Northstar_Server_Daemon/issues"
   },
-  "homepage": "https://github.com/RycXEpd/R2Northstar_Server_Daemon#readme"
+  "homepage": "https://github.com/RycXEpd/R2Northstar_Server_Daemon#readme",
+  "dependencies": {}
 }
