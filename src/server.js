@@ -10,7 +10,7 @@ const path = require("node:path");
 const child_process = require("node:child_process");
 const config = require("./lib/config");
 const argument = require("./lib/arguments");
-const util=require("node:util");
+const util = require("node:util");
 
 const defaultCfg = {
     ns_server_name: 'Unnamed Northstar Server',
@@ -39,10 +39,10 @@ const defaultCfg = {
 };
 const defaultArgument = {
     '-port': '37015',
-    '+setplaylist':'private_match',
-    '+mp_gamemode':'private_match',
-    '+setplaylistvaroverrides':'',
-    '+map':'mp_lobby'
+    '+setplaylist': 'private_match',
+    '+mp_gamemode': 'private_match',
+    '+setplaylistvaroverrides': '',
+    '+map': 'mp_lobby'
 };
 
 /**
@@ -123,7 +123,7 @@ class Server {
      * Get running process ID
      * @returns {number} Process ID
      */
-    GetPID(){
+    GetPID() {
         return this.#pid;
     }
 
@@ -137,12 +137,11 @@ class Server {
         if (this.#pid !== 0) {
             throw new Error("Another instance of the server is already running");
         }
-        this.#Init();
         let args = [].slice.call(arguments);
         args.push("-dedicated");
         args.push("-multiple");
-        if(this.#profile!=="R2Northstar"){
-            args.push(util.format('-profile="%s"',this.#profile));
+        if (this.#profile !== "R2Northstar") {
+            args.push(util.format('-profile="%s"', this.#profile));
         }
         let proc = child_process.spawn(path.join(this.#path, "NorthstarLauncher.exe"), args, {
             cwd: this.#path,
@@ -150,7 +149,9 @@ class Server {
         });
         this.#pid = proc.pid;
         let self = this;
-        this.#timer = setTimeout(function() { self.#Check() }, this.delay*1000);
+        this.#timer = setTimeout(function () {
+            self.#Check()
+        }, this.delay * 1000);
         // this.#timer = setInterval(this.#Check, this.delay * 1000);
     }
 
@@ -173,12 +174,14 @@ class Server {
      * @param {number} pid Process ID
      */
     Attach(pid) {
-        if (pid !== 0)
+        if (this.#pid !== 0)
             throw new Error("Another server process is already running");
-        this.#Init();
         this.#pid = pid;
         this.#Check();
-        this.#timer = setInterval(this.#Check, this.delay * 1000);
+        let self = this;
+        this.#timer = setTimeout(function () {
+            self.#Check()
+        }, this.delay * 1000);
     }
 
     /**
@@ -186,7 +189,24 @@ class Server {
      */
     Restart() {
         this.Stop();
+        this.Init();
         this.Start();
+    }
+
+    /**
+     * Parse config&argument file
+     */
+    Init() {
+        let cfg = path.join(this.#path, this.#profile, 'mods\\Northstar.CustomServers\\mod\\cfg\\autoexec_ns_server.cfg');
+        if (!fs.existsSync(cfg))
+            throw new Error("No such file or directory");
+        cfg = fs.readFileSync(cfg);
+        this.#config = Object.assign({}, defaultCfg, config.parse(cfg.toString()));
+        let arg = path.join(this.#path, 'ns_startup_args_dedi.txt');
+        if (!fs.existsSync(arg))
+            throw new Error("No such file or directory");
+        arg = fs.readFileSync(arg);
+        this.#argument = Object.assign({}, defaultArgument, argument.parse(arg.toString()));
     }
 
     // Private Methods(Utils)
@@ -213,22 +233,6 @@ class Server {
         if (!alive)
             return this.Restart();
     }
-
-    /**
-     * Parse config&argument file
-     */
-    #Init() {
-        let cfg = path.join(this.#path, this.#profile, 'mods\\Northstar.CustomServers\\mod\\cfg\\autoexec_ns_server.cfg');
-        if (!fs.existsSync(cfg))
-            throw new Error("No such file or directory");
-        cfg = fs.readFileSync(cfg);
-        this.#config = Object.assign({}, defaultCfg, config.parse(cfg.toString()));
-        let arg = path.join(this.#path, 'ns_startup_args_dedi.txt');
-        if (!fs.existsSync(arg))
-            throw new Error("No such file or directory");
-        arg = fs.readFileSync(arg);
-        this.#argument = Object.assign({}, defaultArgument, argument.parse(arg.toString()));
-    }
 }
 
-exports=module.exports=Server;
+exports = module.exports = Server;
