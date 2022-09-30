@@ -10,6 +10,7 @@ const path = require("node:path");
 const child_process = require("node:child_process");
 const config = require("./lib/config");
 const argument = require("./lib/arguments");
+const util=require("node:util");
 
 const defaultCfg = {
     ns_server_name: 'Unnamed Northstar Server',
@@ -140,12 +141,17 @@ class Server {
         let args = [].slice.call(arguments);
         args.push("-dedicated");
         args.push("-multiple");
+        if(this.#profile!=="R2Northstar"){
+            args.push(util.format('-profile="%s"',this.#profile));
+        }
         let proc = child_process.spawn(path.join(this.#path, "NorthstarLauncher.exe"), args, {
             cwd: this.#path,
             detached: true
         });
         this.#pid = proc.pid;
-        this.#timer = setInterval(this.#Check, this.delay * 1000);
+        let self = this;
+        this.#timer = setTimeout(function() { self.#Check() }, this.delay*1000);
+        // this.#timer = setInterval(this.#Check, this.delay * 1000);
     }
 
     /**
@@ -171,6 +177,7 @@ class Server {
             throw new Error("Another server process is already running");
         this.#Init();
         this.#pid = pid;
+        this.#Check();
         this.#timer = setInterval(this.#Check, this.delay * 1000);
     }
 
