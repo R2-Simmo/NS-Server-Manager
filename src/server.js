@@ -215,12 +215,12 @@ class Server {
         if (!fs.existsSync(cfg))
             throw new Error("No such file or directory");
         cfg = fs.readFileSync(cfg);
-        this.#config = Object.assign({}, defaultCfg, config.parse(cfg));
+        this.#config = Object.assign({}, defaultCfg, config.parse(cfg.toString()));
         let arg = path.join(this.#path, 'ns_startup_args_dedi.txt');
         if (!fs.existsSync(arg))
             throw new Error("No such file or directory");
         arg = fs.readFileSync(arg);
-        this.#argument = Object.assign({}, defaultArgument, argument.parse(arg));
+        this.#argument = Object.assign({}, defaultArgument, argument.parse(arg.toString()));
     }
 }
 
