@@ -40,8 +40,8 @@ function StringifyArguments(args){
     let ret='';
     Object.keys(args).forEach(key=>{
         let value=args[key];
-        if(value.indexOf(" ")!==-1)
-            value='"'+value+'"';
+        if(typeof value==="object")
+            value='"'+Playlist.stringify(value)+'"';
         ret+=key+" "+value.toString()+"\n";
     });
     return ret;
