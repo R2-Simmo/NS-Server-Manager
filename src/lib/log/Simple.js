@@ -1,8 +1,8 @@
 /**
- * @description
- * @fileOverview
+ * @description Simple Logger
+ * @fileOverview Simple Logger Class
  * @author RycXEpd
- * @version x.x.x 20220930
+ * @version 1.2.0 20220930
  */
 
 const {EmptyLogger} = require('./Logger');
@@ -75,7 +75,7 @@ class SimpleLogger extends EmptyLogger {
         console.log('[%s] \x1b[0;31m[Fatal Error]\x1b[0m [%s] %s',timeline,this.#path,color);
         fs.appendFileSync(path.join(this.#root,'logs',new Date().format('yyyy-MM-dd.log')),
             util.format('[%s] [Fatal Error] [%s] %s\n',timeline,this.#path,normal));
-        process.kill(process.pid,'SIGINT');
+        process.exit(-1);
     }
 
     RegisterModule(name){
