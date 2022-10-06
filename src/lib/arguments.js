@@ -19,8 +19,8 @@ function ParseArguments(str){
     let args={};
     let row;
     let regex={
-        str:/[-|+](\w*)\s+"(.*?)"/g,
-        normal:/[-|+](\w*)\s+(\w+)/g
+        str:/([-|+]\w*)\s+"(.*?)"/g,
+        normal:/([-|+]\w*)\s+(\w+)/g
     }
     while((row = regex.str.exec(raw))!==null) {
         args[row[1]]=Playlist.parse(row[2]);
