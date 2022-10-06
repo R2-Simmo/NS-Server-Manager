@@ -13,7 +13,7 @@ const path=require('node:path');
 
 class SimpleLogger extends EmptyLogger {
     #root = null;
-    #path = null;
+    #path = 'main';
 
     constructor(options) {
         super();
@@ -80,6 +80,9 @@ class SimpleLogger extends EmptyLogger {
 
     RegisterModule(name){
         let options={root:this.#root,path:this.#path+'.'+name};
+        if(this.#path==='main'){
+            options.path=name;
+        }
         return new SimpleLogger(options);
     }
 }
