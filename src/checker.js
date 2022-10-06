@@ -50,6 +50,7 @@ class Checker extends Events.EventEmitter {
     #pass = false;
     #emitter = null;
     #APIBase = 'https://nscn.wolf109909.top';
+    #logger=console;
 
     constructor(host, delay = 5 * 60) {
         super();
@@ -61,16 +62,23 @@ class Checker extends Events.EventEmitter {
         this.#emitter = setInterval(this.#InternalCheck, delay * 1000)
     }
 
+    UseLogger(logger){
+        this.#logger=logger||console;
+    }
+
     Check() {
+        this.#logger.debug("Manual check");
         this.#InternalCheck();
         this.#pass = true;
     }
 
     #InternalCheck() {
         if (this.#pass) {
+            this.#logger.debug("Pass heartbeat by manual check");
             this.#pass = false;
             return;
         }
+        this.#logger.info("Update server list");
         let url = new URL(this.#APIBase);
         url.pathname = apis.client.servers;
         let requester = url.protocol.includes('https') ? https : http;
@@ -82,6 +90,7 @@ class Checker extends Events.EventEmitter {
     }
 
     #Update(data) {
+        this.#logger.info("Server list update successful");
         let obj = JSON.parse(data);
         this.#servers = {};
         for (let server of obj) {
