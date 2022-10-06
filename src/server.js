@@ -11,6 +11,7 @@ const child_process = require("node:child_process");
 const config = require("./lib/config");
 const argument = require("./lib/arguments");
 const util = require("node:util");
+const Logger=require('./lib/log');
 
 const defaultCfg = {
     ns_server_name: 'Unnamed Northstar Server',
@@ -55,12 +56,20 @@ class Server {
     #timer = null;
     #config = {};
     #argument = {};
+    #logger=new Logger.Simple();
     delay = 30;
 
     // constructor
     constructor(path = '') {
         if (path !== '')
             this.#path = path;
+        if(this.#logger===console)
+            this.#logger.fatal=console.error;
+    }
+
+    // Logger
+    UseLogger(logger){
+        this.#logger=logger||this.#logger;
     }
 
     // Variables
@@ -70,9 +79,13 @@ class Server {
      * @param {string} path Server Path
      */
     SetPath(path) {
-        if (!fs.existsSync(path))
-            throw new Error("No such file or directory");
+        this.#logger.debug("Try to set path to:%s",path);
+        if (!fs.existsSync(path)) {
+            this.#logger.error("No such file or directory");
+            return;
+        }
         this.#path = path;
+        this.#logger.info("Change server root path to:%d",path);
     }
 
     /**
@@ -80,9 +93,11 @@ class Server {
      * @param {string} profile Profile Name
      */
     SetProfile(profile) {
+        this.#logger.debug("Try to set server profile path to:%s",profile);
         this.#profile = profile || "R2Northstar";
         if (this.#pid !== 0)
-            this.Stop();
+            this.Restart();
+        this.#logger.info("Change server profile path to:%d",profile);
     }
 
     /**
@@ -90,8 +105,10 @@ class Server {
      * @returns {string} Northstar Version
      */
     GetVersion() {
+        this.#logger.debug("Get Northstar version from core mods");
         let mod = fs.readFileSync(path.join(this.#path, this.#profile, "mods\\Northstar.Client\\mod.json"));
         mod = JSON.parse(mod.toString());
+        this.#logger.debug("mod config:%O",mod);
         return mod["Version"];
     }
 
@@ -100,6 +117,7 @@ class Server {
      * @returns {string} Northstar Display Name
      */
     GetName() {
+        this.#logger.debug("Cached config:%O",this.#config);
         return this.#config.ns_server_name;
     }
 
@@ -108,6 +126,7 @@ class Server {
      * @returns {number} Northstar Auth Port
      */
     GetAuthPort() {
+        this.#logger.debug("Cached config:%O",this.#config);
         return this.#config.ns_player_auth_port;
     }
 
@@ -116,6 +135,7 @@ class Server {
      * @returns {number} Game Port
      */
     GetPort() {
+        this.#logger.debug("Cached arguments:%O",this.#config);
         return parseInt(this.#argument['-port']);
     }
 
@@ -124,6 +144,7 @@ class Server {
      * @returns {number} Process ID
      */
     GetPID() {
+        this.#logger.debug("Server main process PID:%d",this.#pid);
         return this.#pid;
     }
 
@@ -134,8 +155,10 @@ class Server {
      * @param {...string} arg Additional Arguments
      */
     Start(arg) {
+        this.#logger.debug("Try to startup server:%s",this.#config.ns_server_name);
         if (this.#pid !== 0) {
-            throw new Error("Another instance of the server is already running");
+            this.#logger.error("Another instance of the server is already running");
+            return;
         }
         let args = [].slice.call(arguments);
         args.push("-dedicated");
@@ -143,10 +166,12 @@ class Server {
         if (this.#profile !== "R2Northstar") {
             args.push(util.format('-profile="%s"', this.#profile));
         }
+        this.#logger.debug("Startup with arguments:'%s'",args.join(' '));
         let proc = child_process.spawn(path.join(this.#path, "NorthstarLauncher.exe"), args, {
             cwd: this.#path,
             detached: true
         });
+        this.#logger.info("Server startup successfully");
         this.#pid = proc.pid;
         let self = this;
         this.#timer = setTimeout(function () {
@@ -159,10 +184,14 @@ class Server {
      * Stop this server
      */
     Stop() {
-        if (this.#pid === 0)
-            throw new Error("Server not running");
+        this.#logger.debug("Try to stop server:%s",this.#config.ns_server_name);
+        if (this.#pid === 0) {
+            this.#logger.error("Server not running");
+            return;
+        }
         if (this.#Alive()) {
             process.kill(this.#pid, 'SIGINT');
+            this.#logger.info("Server stop successfully");
         }
         this.#pid = 0;
         clearInterval(this.#timer);
@@ -174,10 +203,15 @@ class Server {
      * @param {number} pid Process ID
      */
     Attach(pid) {
-        if (this.#pid !== 0)
-            throw new Error("Another server process is already running");
+        this.#logger.debug("Try to attach to running server:%d",pid);
+        if (this.#pid !== 0) {
+            this.#logger.error("Another server process is already running");
+            return;
+        }
         this.#pid = pid;
+        this.#logger.debug("Check if process alive");
         this.#Check();
+        this.#logger.info("Attach to server process successfully");
         let self = this;
         this.#timer = setTimeout(function () {
             self.#Check()
@@ -188,7 +222,9 @@ class Server {
      * Restart this server
      */
     Restart() {
+        this.#logger.debug("Try to restart server:%s",this.#config.ns_server_name);
         this.Stop();
+        this.#logger.debug("Refresh caches");
         this.Init();
         this.Start();
     }
@@ -197,14 +233,21 @@ class Server {
      * Parse config&argument file
      */
     Init() {
+        this.#logger.debug("Create caches");
+        this.#logger.info("Refresh config cache");
         let cfg = path.join(this.#path, this.#profile, 'mods\\Northstar.CustomServers\\mod\\cfg\\autoexec_ns_server.cfg');
-        if (!fs.existsSync(cfg))
-            throw new Error("No such file or directory");
+        if (!fs.existsSync(cfg)) {
+            this.#logger.fatal("No such file or directory");
+            return;
+        }
         cfg = fs.readFileSync(cfg);
         this.#config = Object.assign({}, defaultCfg, config.parse(cfg.toString()));
+        this.#logger.info("Refresh arguments cache");
         let arg = path.join(this.#path, 'ns_startup_args_dedi.txt');
-        if (!fs.existsSync(arg))
-            throw new Error("No such file or directory");
+        if (!fs.existsSync(arg)) {
+            this.#logger.fatal("No such file or directory");
+            return;
+        }
         arg = fs.readFileSync(arg);
         this.#argument = Object.assign({}, defaultArgument, argument.parse(arg.toString()));
     }
@@ -230,8 +273,10 @@ class Server {
     #Check() {
         // Process Alive Check
         let alive = this.#Alive();
-        if (!alive)
+        if (!alive) {
+            this.#logger.info("Server exited,restart...");
             return this.Restart();
+        }
     }
 }
 
