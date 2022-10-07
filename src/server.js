@@ -57,7 +57,7 @@ class Server {
     #config = {};
     #argument = {};
     #logger=new Logger.Simple();
-    delay = 30;
+    delay = 5;
 
     // constructor
     constructor(path = '') {
