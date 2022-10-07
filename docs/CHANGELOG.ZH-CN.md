@@ -6,7 +6,8 @@
 
 ### 新增
 
-* __docs__: 添加了英语版本的Changelog
+* __docs__: 添加了英语版本的Changelog([1cfb463d])
+* __docs__: 添加了简体中文版本的Changelog([22b57e90])
 
 ## [1.2.0] - 2022-10-06
 
@@ -88,6 +89,9 @@
 * 自动的在线检测
 * 自动进程重启
 * 基于多线程的 monitor
+
+[22b57e90]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/22b57e90c141e6eacf6d24f554100e257c274118
+[1cfb463d]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/1cfb463d39ea16093aff614326ac93dc4a113f4f
 
 [6bf6cd73]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/6bf6cd73d38b83af10062d006c838ba69bc8e22c
 [498097f4]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/498097f41c02e6cb2d10c6ed71c11cd724efaea3
