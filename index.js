@@ -24,9 +24,9 @@ for(let index in ServerPaths){
     logger.debug("Server-%d Loaded",parseInt(index)+1);
     server.Init();
     logger.debug("Server-%d(%s) Initialized",parseInt(index)+1,server.GetName());
-    if(fs.existsSync(util.format('./pid/%s.lock', server.GetName()))){
+    if(fs.existsSync(util.format('./pids/%s.pid', server.GetName()))){
         logger.info("Found PID Lock File,Attach to process...");
-        server.Attach(parseInt(fs.readFileSync(util.format('./pid/%s.lock', server.GetName())).toString()));
+        server.Attach(parseInt(fs.readFileSync(util.format('./pids/%s.pid', server.GetName())).toString()));
     }else{
         logger.info("No PID Lock File Found,Start...");
         server.Start();
@@ -63,10 +63,10 @@ function SavePID(){
     if(exited)
         return
     exited=true;
-    removeIfExists('./pid');
-    fs.mkdirSync('./pid');
+    removeIfExists('./pids');
+    fs.mkdirSync('./pids');
     for(let server of servers){
-        fs.writeFileSync(util.format('./pid/%s.lock', server.GetName()), server.GetPID().toString());
+        fs.writeFileSync(util.format('./pids/%s.pid', server.GetName()), server.GetPID().toString());
         logger.info("Save PID(%d) for Server(%s)",server.GetPID(),server.GetName());
     }
     logger.info("System Exited");
