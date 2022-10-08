@@ -8,6 +8,18 @@ English|[简体中文]
 
 * __docs__: add English version Changelog([1cfb463d]).
 * __docs__: add Chinese Simplified version Changelog([22b57e90]).
+* __logger__: add tsconfig and build files([3f07dc53]).
+
+### Changed
+
+* __main__: change server PID file style([0c14afaa]).
+* __server__: change default alive check delay to 5 seconds([3264c5c7]).
+
+### Fixed
+
+* __server__: fix SetPath log with wrong values([85dbb2a0]).
+* __logger__: fix SimpleLogger will crash when create without params([9f4b7f57]).
+* __checker__: fix status update timer bind([6d82bf87]).
 
 ## [1.2.0] - 2022-10-06
 
@@ -47,7 +59,7 @@ English|[简体中文]
 ### Fixed
 
 * __server__: fix parse argument with wrong param type([9748b24d]).
-* __server__: fix online check timer bind([012860cf]).
+* __server__: fix alive check timer bind([012860cf]).
 
 ### Removed
 
@@ -90,9 +102,18 @@ Just auto keep alive for Northstar server
 * restart on process exit.
 * multi-thread based monitor.
 
+<!-- Unreleased commits -->
+
+<!-- v1.2.1 commits -->
+[6d82bf87]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/6d82bf87495dd7474c00b7e5cdcea86fe13fe0e4
+[9f4b7f57]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/9f4b7f578a1e355bb0a00f1c241643030267479d
+[85dbb2a0]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/85dbb2a0ae9cec9f1300e0dde478b82fa6c32ab4
+[3f07dc53]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/3f07dc53881173bb7fa757638bd79de8cc743bd6
+[3264c5c7]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/3264c5c74bf19cce2a57446670a840f2fd8dcfd0
+[0c14afaa]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/0c14afaa4d8efdd42403bbb1f068ca239817b501
 [22b57e90]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/22b57e90c141e6eacf6d24f554100e257c274118
 [1cfb463d]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/1cfb463d39ea16093aff614326ac93dc4a113f4f
-
+<!-- v1.2.0 commits -->
 [6bf6cd73]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/6bf6cd73d38b83af10062d006c838ba69bc8e22c
 [498097f4]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/498097f41c02e6cb2d10c6ed71c11cd724efaea3
 [bd2a1d37]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/bd2a1d37c18caa5df2556321d5ce4a839090bf86
@@ -104,26 +125,27 @@ Just auto keep alive for Northstar server
 [d38c2bfb]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/d38c2bfbf420c5477debcf383311853d3a54d429
 [3f00b563]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/3f00b5637f8d7408b8fdba723a75917b3f996fe9
 [3fc18ba6]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/3fc18ba6265f8fecb4ba1ca6a75a21d7704273b0
-
+<!-- v1.1.0 commits -->
 [25db07e3]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/25db07e318624a6650b86678b1d5621bcf00ab08
 [04a0c6c6]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/04a0c6c6976a28dbb42a0906cebef022b7a67160
 [012860cf]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/012860cf7b73487481464560c9b7535d8607f91e
 [9748b24d]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/9748b24d73be2f77cbe8ae078261736a5d1d7fe2
 [6036d667]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/6036d66703581c27c5f93ad03ffe9a6de8853928
 [cc5ffb4f]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/cc5ffb4fc4feb92605c504ca11fe4538776abb2a
-
+<!-- v1.0.0 commits -->
 [2758c372]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/2758c37208ec7f41ae5c924abe60a0e4dcf2a568
 [0023b867]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/0023b867ce6fa42cecbf5a2cd2a0f046e5baa800
 [cf807069]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/cf8070696d4c8f0679307d4f7bd2725dd750e326
 [836e6fb3]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/836e6fb3d76a42743abc2390a8a05969779aaacc
 [c72342a9]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/c72342a9783d5cd59eab992eea13732138f3898c
 [8a888e17]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commit/8a888e17244a3744bf202af73958f4f1d38aa3e1
-
-[Unreleased]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/compare/v1.2.0...HEAD
+<!-- Version Diff -->
+[Unreleased]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/compare/v1.2.1...HEAD
+[1.2.1]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/compare/v0.1.0...v1.0.0
 [0.1.0-alpha]: https://github.com/R2NorthstarCN/Northstar_Server_Daemon_JSEdition/commits/v0.1.0
-
+<!-- Changelog Files -->
 [简体中文]: /docs/CHANGELOG.ZH-CN.md
 [English]: /CHANGELOG.md
