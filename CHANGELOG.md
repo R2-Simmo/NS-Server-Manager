@@ -4,6 +4,8 @@ English|[简体中文]
 
 ## [Unreleased]
 
+## [1.2.1] - 2022-10-08
+
 ### Added
 
 * __docs__: add English version Changelog([1cfb463d]).
