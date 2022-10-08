@@ -59,7 +59,10 @@ class Checker extends Events.EventEmitter {
         if(typeof host==='number')
             delay=host;
         this.on('check', this.Check);// register event handler
-        this.#emitter = setInterval(this.#InternalCheck, delay * 1000)
+        let self = this;
+        this.#emitter = setInterval(function (){
+            self.#InternalCheck()
+        }, delay * 1000)
     }
 
     UseLogger(logger){
