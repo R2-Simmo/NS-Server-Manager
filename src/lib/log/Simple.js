@@ -15,16 +15,16 @@ class SimpleLogger extends EmptyLogger {
     #root = null;
     #path = 'main';
 
-    constructor(options) {
+    constructor(options={}) {
         super();
         this.#root = options.root || __dirname;
-        if(!fs.existsSync(path.join(this.#root,'logs'))){
-            fs.mkdirSync(path.join(this.#root,'logs'));
-        }
         this.#path=options.path||'main';
     }
 
     #format(format, args){
+        if(!fs.existsSync(path.join(this.#root,'logs'))){
+            fs.mkdirSync(path.join(this.#root,'logs'));
+        }
         let param = args.slice();
         param.unshift(format);
         let timeline=new Date().format('yyyy-MM-dd hh:mm:ss.S');
