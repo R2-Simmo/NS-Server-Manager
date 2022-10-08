@@ -63,8 +63,6 @@ class Server {
     constructor(path = '') {
         if (path !== '')
             this.#path = path;
-        if(this.#logger===console)
-            this.#logger.fatal=console.error;
     }
 
     // Logger
@@ -85,7 +83,7 @@ class Server {
             return;
         }
         this.#path = path;
-        this.#logger.info("Change server root path to:%d",path);
+        this.#logger.info("Change server root path to:%s",path);
     }
 
     /**
