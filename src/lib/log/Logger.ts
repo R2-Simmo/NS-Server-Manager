@@ -6,21 +6,29 @@
  */
 
 /** Logger class define */
-abstract class EmptyLogger {
+class EmptyLogger {
 
-    abstract log(format: string, ...args: any[]): void;
+    log(format: string, ...args: any[]): void {
+    };
 
-    abstract error(format: string, ...args: any): void;
+    error(format: string, ...args: any): void {
+    };
 
-    abstract warn(format: string, ...args: any): void;
+    warn(format: string, ...args: any): void {
+    };
 
-    abstract info(format: string, ...args: any): void;
+    info(format: string, ...args: any): void {
+    };
 
-    abstract debug(format: string, ...args: any): void;
+    debug(format: string, ...args: any): void {
+    };
 
-    abstract fatal(format: string, ...args: any): void;
+    fatal(format: string, ...args: any): void {
+    };
 
-    abstract RegisterModule(name: string): EmptyLogger;
+    RegisterModule(name: string): EmptyLogger {
+        return new EmptyLogger();
+    };
 }
 
 export = {EmptyLogger};
