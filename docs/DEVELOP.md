@@ -291,7 +291,7 @@ Initialize server configure and startup arguments
 
 ### class:Checker
 Online status check class
-* defined at: [server.js]
+* defined at: [checker.js]
 * permission require: none
 
 #### Checker.constructor

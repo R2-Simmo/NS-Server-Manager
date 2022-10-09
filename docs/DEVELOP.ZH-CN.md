@@ -291,7 +291,7 @@ Logger 绑定函数
 
 ### class:Checker
 在线状态检测类
-* 定义位置: [server.js]
+* 定义位置: [checker.js]
 * 权限要求: 无
 
 #### Checker.constructor
