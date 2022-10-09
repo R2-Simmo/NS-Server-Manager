@@ -150,15 +150,14 @@ class Server {
 
     /**
      * Start new server process
-     * @param {...string} arg Additional Arguments
+     * @param {string} args Additional Arguments
      */
-    Start(arg) {
+    Start(...args) {
         this.#logger.debug("Try to startup server:%s",this.#config.ns_server_name);
         if (this.#pid !== 0) {
             this.#logger.error("Another instance of the server is already running");
             return;
         }
-        let args = [].slice.call(arguments);
         args.push("-dedicated");
         args.push("-multiple");
         if (this.#profile !== "R2Northstar") {
