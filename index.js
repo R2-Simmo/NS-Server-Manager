@@ -66,6 +66,8 @@ function SavePID(){
     removeIfExists('./pids');
     fs.mkdirSync('./pids');
     for(let server of servers){
+        if(server.GetPID()===0)
+            continue;
         fs.writeFileSync(util.format('./pids/%s.pid', server.GetName()), server.GetPID().toString());
         logger.info("Save PID(%d) for Server(%s)",server.GetPID(),server.GetName());
     }
