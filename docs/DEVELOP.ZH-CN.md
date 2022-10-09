@@ -322,7 +322,7 @@ Logger 绑定函数
 * 调用条件: 无
 
 #### Checker.on
-注册 Event 响应函数, Events 可参考 [Checker.Events](#checker-events)
+注册 Event 响应函数, Events 可参考 [Checker.Events](#checkerevents)
 * 继承自: `Events.EventEmitter`
 
 |    参数名    |    类型    | 必须  |    描述    |            示例             |

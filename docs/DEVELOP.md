@@ -322,7 +322,7 @@ Check once manual
 * call require: none
 
 #### Checker.on
-Register Event listener, defined Events on [Checker.Events](#checker-events)
+Register Event listener, defined Events on [Checker.Events](#checkerevents)
 * inherited by: `Events.EventEmitter`
 
 | param name |   type   | required |       description       |          sample           |
