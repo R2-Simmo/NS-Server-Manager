@@ -42,11 +42,4 @@ function fromUnicode(encoded) {
     return encoded;
 }
 
-//Hook:String.toUnicode,String.fromUnicode
-(function HookInit() {
-    String.prototype.toUnicode = function internal_toUnicode() {
-        return toUnicode(this.toString());
-    }
-    String.fromUnicode = fromUnicode;
-})()
 exports = module.exports = {toUnicode, fromUnicode}
