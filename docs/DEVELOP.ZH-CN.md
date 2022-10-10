@@ -66,11 +66,11 @@ __文件位置__: [/src/lib/unicode.js]()
 
 __描述__: 实用功能, Unicode 编解码函数
 
-#### Date_Extend
+#### Hooks
 
-__文件位置__: [/src/lib/date_extend.js]()
+__文件位置__: [/src/lib/hooks.js]()
 
-__描述__: 实用功能, Date 格式化为字符串
+__描述__: 实用功能, 对已有对象的hook
 
 ## 函数及类定义
 
@@ -432,7 +432,7 @@ Fatal Error 等级日志输出, 会同时结束程序
 
 ### class:String
 对 String 类进行了修改, 增加了2个函数
-* 定义位置: [unicode.js]
+* 定义位置: [hooks.js]
 * 权限要求: 无
 
 #### String.toUnicode
@@ -453,7 +453,7 @@ Fatal Error 等级日志输出, 会同时结束程序
 
 ### class:Date
 对 Date 类进行了修改, 增加了1个函数
-* 定义位置: [date_extend.js]
+* 定义位置: [hooks.js]
 * 权限要求: 无
 
 #### Date.format
@@ -478,7 +478,7 @@ Fatal Error 等级日志输出, 会同时结束程序
 [log]: #logger
 [Logger.ts]: #empty
 [Simple.js]: #simple
-[date_extend.js]: #date_extend
+[hooks.js]: #hooks
 <!-- Develop Document Files -->
 [English]: /docs/DEVELOP.md
 [简体中文]: /docs/DEVELOP.ZH-CN.md

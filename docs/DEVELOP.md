@@ -66,11 +66,11 @@ __path__: [/src/lib/unicode.js]()
 
 __description__: Utils, Unicode encoder&decoder
 
-#### Date_Extend
+#### Hooks
 
-__path__: [/src/lib/date_extend.js]()
+__path__: [/src/lib/hooks.js]()
 
-__description__: Utils, Date formatter
+__description__: Utils, Internal Object hooks
 
 ## Functions & Classes
 
@@ -432,7 +432,7 @@ Register new Logger as submodule
 
 ### class:String
 Modified String class, add 2 methods
-* defined at: [unicode.js]
+* defined at: [hooks.js]
 * permission require: none
 
 #### String.toUnicode
@@ -453,7 +453,7 @@ Decode text with Unicode
 
 ### class:Date
 Modified Date class, add 1 method
-* defined at: [date_extend.js]
+* defined at: [hooks.js]
 * permission require: none
 
 #### Date.format
@@ -478,7 +478,7 @@ Generate text from Date object with format
 [log]: #logger
 [Logger.ts]: #empty
 [Simple.js]: #simple
-[date_extend.js]: #date_extend
+[hooks.js]: #hooks
 <!-- Develop Document Files -->
 [English]: /docs/DEVELOP.md
 [简体中文]: /docs/DEVELOP.ZH-CN.md
